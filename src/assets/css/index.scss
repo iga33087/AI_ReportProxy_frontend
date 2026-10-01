@@ -1,0 +1,67 @@
+$color1:rgb(0, 73, 184);
+$color2:#e2e2e2;
+
+html,body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: "微軟正黑體";
+  background-color: $color2;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header {
+  height: 60px;
+  background-color: $color1;
+  color:#fff;
+  .headerBox {
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .headerBoxLogo {
+    font-size: 1.6rem;
+    color:#fff;
+  }
+  .headerBoxMenu {
+    display: flex;
+    align-self: center;
+  }
+  .headerBoxMenuItem {
+    margin-left: 2rem;
+    font-size: 1.2rem;
+    color:#fff;
+    &.router-link-exact-active {
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+.content {
+  height: calc(100vh - 60px);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.cardBox {
+  border: 1px solid $color1;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  .cardBoxTitle {
+    padding: 0.6rem 1rem;
+    background-color: $color1;
+    color:#fff;
+  }
+  .cardBoxContent {
+    padding: 0.6rem 1rem;
+    background-color: #fff;
+  }
+}
