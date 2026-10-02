@@ -14,55 +14,55 @@
         <el-card class="mb-4">
           <template #header><div class="fw-bold">硬體監控資料</div></template>
           <el-form-item label="CPU 使用率摘要">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.hardwareData.cpuUsageSummary" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="Memory 使用率摘要">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.hardwareData.memoryUsageSummary" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="新建連線速率摘要">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.hardwareData.newConnectionSummary" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="活躍連線數摘要">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.hardwareData.activeConnectionSummary" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="線上認證用戶摘要">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.hardwareData.onlineVerificationSummary" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="線上用戶（IP）摘要">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.hardwareData.onlineUsersSummary" autosize type="textarea" />
           </el-form-item>
         </el-card>
         <el-card class="mb-4">
           <template #header><div class="fw-bold">用戶流量資料</div></template>
           <el-form-item label="Top 20 用戶流量排名">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.userTrafficData.top20UserTrafficRanking" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="Top 20 用戶群組流量排名">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.userTrafficData.top20UserTrafficGroupRanking" autosize type="textarea" />
           </el-form-item>
         </el-card>
         <el-card class="mb-4">
           <template #header><div class="fw-bold">服務流量資料</div></template>
           <el-form-item label="Top 20 服務流量排名">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.serviceTrafficData.top20ServiceTrafficRanking" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="Top 20 服務類型流量排名">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.serviceTrafficData.top20ServiceTrafficTypeRanking" autosize type="textarea" />
           </el-form-item>
         </el-card>
         <el-card class="mb-4">
           <template #header><div class="fw-bold">網域流量資料</div></template>
           <el-form-item label="Top 20 網域流量排名">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.domainTrafficData.top20DomainTrafficRanking" autosize type="textarea" />
           </el-form-item>
           <el-form-item label="Top 20 網域類型流量排名">
-            <el-input v-model="textarea1" autosize type="textarea" />
+            <el-input v-model="deviceForm.domainTrafficData.top20DomainTrafficTypeRanking" autosize type="textarea" />
           </el-form-item>
         </el-card>
         <el-form-item>
           <div class="w-100 d-flex align-items-center justify-content-end">
             <el-button type="primary" @click="sub">Create</el-button>
-            <el-button>Cancel</el-button>
+            <el-button @click="showFormBox=false">Cancel</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -90,17 +90,39 @@
 </template>
 
 <script setup>
-import {ref,toRaw} from 'vue'
+import {ref} from 'vue'
 import CardBox from '../components/CardBox.vue'
 import api from '../assets/js/api.js'
 
 const showFormBox=ref(false)
 const isAdd=ref(true)
-const deviceForm=ref({
+const deviceFormInit=ref({
   name:"",
   uuid:"",
-  key:""
+  key:"",
+  hardwareData: {
+    activeConnectionSummary:"",
+    cpuUsageSummary:"",
+    memoryUsageSummary:"",
+    newConnectionSummary:"",
+    onlineUsersSummary:"",
+    onlineVerificationSummary:""
+  },
+  userTrafficData: {
+    top20UserTrafficRanking:"",
+    top20UserTrafficGroupRanking:"",
+  },
+  serviceTrafficData: {
+    top20ServiceTrafficRanking:"",
+    top20ServiceTrafficTypeRanking:""
+  },
+  domainTrafficData: {
+    top20DomainTrafficRanking:"",
+    top20DomainTrafficTypeRanking:""
+  }
 })
+
+const deviceForm=ref(JSON.parse(JSON.stringify(deviceFormInit.value)))
 
 const deviceTableData=ref([])
 
@@ -110,17 +132,13 @@ async function getInit() {
 
 async function toAdd() {
   isAdd.value=true
-  deviceForm.value={
-    name:"",
-    uuid:"",
-    key:""
-  }
+  deviceForm.value=JSON.parse(JSON.stringify(deviceFormInit.value))
   showFormBox.value=true
 }
 
 async function toEdit(x) {
   isAdd.value=false
-  deviceForm.value=structuredClone(toRaw(x))
+  deviceForm.value=JSON.parse(JSON.stringify(x))
   showFormBox.value=true
 }
 
