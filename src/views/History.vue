@@ -8,7 +8,7 @@
           <el-table-column fixed="right" label="Operations" width="200">
             <template #default>
               <el-button link type="primary">查看</el-button>
-              <el-button link type="primary">刪除</el-button>
+              <el-button link type="danger">刪除</el-button>
             </template>
           </el-table-column>
         </el-table>

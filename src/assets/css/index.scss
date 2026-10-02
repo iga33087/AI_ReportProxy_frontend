@@ -37,9 +37,9 @@ a {
     margin-left: 2rem;
     font-size: 1.2rem;
     color:#fff;
+    transition-duration: 0.2s;
     &.router-link-exact-active {
-      font-weight: bold;
-      font-size: 1.3rem;
+      transform: scale(1.2);
     }
   }
 }
