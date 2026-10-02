@@ -18,5 +18,8 @@ export default {
   },
   delDevice(x) {
     return instance.delete(`/device/${x.id}`).then(res=>res.data)
+  },
+  postReport(x) {
+    return instance.post(`/report/`,x).then(res=>res.data)
   }
 }
