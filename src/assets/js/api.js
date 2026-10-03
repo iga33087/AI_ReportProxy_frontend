@@ -1,7 +1,20 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 const instance = axios.create();
 instance.defaults.baseURL = "/api"
+
+instance.interceptors.response.use((response)=> {
+  if(response.data?.status<0) {
+    throw response
+  }
+  return response;
+}, function (error) {
+  //const store = useStore();
+  ElMessage.error(error?.response?.data ? JSON.stringify(error.response.data) : error.message)
+  //store.$patch({loading:false})
+  return Promise.reject(error);
+});
 
 export default {
   getTest() {
