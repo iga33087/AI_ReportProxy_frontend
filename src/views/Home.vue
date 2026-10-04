@@ -8,11 +8,6 @@
               <el-option v-for="(item) in deviceTableData" :label="item.name" :value="item.id" :key="item.id" />
             </el-select>
           </el-form-item>
-          <el-form-item label="產品">
-            <el-select v-model="formData.productId">
-              <el-option v-for="(item) in productTableData" :label="item.name" :value="item.id" :key="item.id" />
-            </el-select>
-          </el-form-item>
           <el-form-item label="報表類型">
             <el-select v-model="formData.reportType">
               <el-option label="硬體監控AI分析" value="1" />
@@ -24,6 +19,7 @@
           <el-form-item>
             <div class="w-100 d-flex align-items-center justify-content-end">
               <el-button type="primary" @click="sub">Create</el-button>
+              <el-button @click="test">資料轉換測試</el-button>
               <el-button>Cancel</el-button>
             </div>
           </el-form-item>
@@ -37,18 +33,11 @@
 import {ref} from 'vue'
 import CardBox from '../components/CardBox.vue'
 import api from '../assets/js/api.js'
+import { ElMessage } from 'element-plus'
 
 const deviceTableData=ref([])
-const productTableData=ref([
-  {id:"P0001",name:"產品一"},
-  {id:"P0002",name:"產品二"},
-  {id:"P0003",name:"產品三"},
-  {id:"P0004",name:"產品四"},
-  {id:"P0005",name:"產品五"},
-])
 const formData=ref({
   deviceId:"",
-  productId:"",
   reportType:"1"
 })
 
@@ -58,6 +47,13 @@ async function getInit() {
 
 async function sub() {
   await api.postReport(formData.value)
+  ElMessage.success('驗證成功')
+  //await api.postReport(formData.value)
+}
+
+async function test() {
+  await api.getTest(formData.value)
+  //await api.postReport(formData.value)
 }
 
 getInit()

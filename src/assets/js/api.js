@@ -17,8 +17,8 @@ instance.interceptors.response.use((response)=> {
 });
 
 export default {
-  getTest() {
-    return instance.get(`/`).then(res=>res.data)
+  getTest(x) {
+    return instance.post(`/report/test`,x).then(res=>res.data)
   },
   getDevice() {
     return instance.get(`/device/`).then(res=>res.data)
@@ -34,5 +34,5 @@ export default {
   },
   postReport(x) {
     return instance.post(`/report/`,x).then(res=>res.data)
-  }
+  },
 }

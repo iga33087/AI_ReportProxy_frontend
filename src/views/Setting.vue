@@ -5,6 +5,11 @@
         <el-form-item label="裝置名稱">
           <el-input v-model="deviceForm.name" />
         </el-form-item>
+        <el-form-item label="產品">
+          <el-select v-model="deviceForm.productId">
+            <el-option v-for="(item) in productTableData" :label="item.name" :value="item.id" :key="item.id" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="UUID">
           <el-input v-model="deviceForm.uuid" />
         </el-form-item>
@@ -75,6 +80,11 @@
         </div>
         <el-table :data="deviceTableData" style="width: 100%">
           <el-table-column prop="name" label="裝置名稱" width="180" />
+          <el-table-column prop="productId" label="產品">
+            <template #default="scope">
+              {{productTableData.find(r=>r.id === scope.row.productId).name}}
+            </template>
+          </el-table-column>
           <el-table-column prop="uuid" label="UUID" />
           <el-table-column prop="key" label="金鑰" />
           <el-table-column fixed="right" label="Operations" width="200">
@@ -97,9 +107,10 @@ import api from '../assets/js/api.js'
 const showFormBox=ref(false)
 const isAdd=ref(true)
 const deviceFormInit=ref({
-  name:"",
-  uuid:"",
-  key:"",
+  name:null,
+  productId:null,
+  uuid:null,
+  key:null,
   hardwareData: {
     activeConnectionSummary:"",
     cpuUsageSummary:"",
@@ -121,6 +132,15 @@ const deviceFormInit=ref({
     top20DomainTrafficTypeRanking:""
   }
 })
+
+const productTableData=ref([
+  {id:"P0001",name:"產品一"},
+  {id:"P0002",name:"產品二"},
+  {id:"P0003",name:"產品三"},
+  {id:"P0004",name:"產品四"},
+  {id:"P0005",name:"產品五"},
+  {id:"P0006",name:"產品六"},
+])
 
 const deviceForm=ref(JSON.parse(JSON.stringify(deviceFormInit.value)))
 
