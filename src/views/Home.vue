@@ -10,10 +10,10 @@
           </el-form-item>
           <el-form-item label="報表類型">
             <el-select v-model="formData.reportType">
-              <el-option label="硬體監控AI分析" value="1" />
-              <el-option label="用戶流量AI分析" value="2" />
-              <el-option label="服務流量AI分析" value="3" />
-              <el-option label="網域流量AI分析" value="4" />
+              <el-option label="硬體監控AI分析" :value="1" />
+              <el-option label="用戶流量AI分析" :value="2" />
+              <el-option label="服務流量AI分析" :value="3" />
+              <el-option label="網域流量AI分析" :value="4" />
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -38,7 +38,7 @@ import { ElMessage } from 'element-plus'
 const deviceTableData=ref([])
 const formData=ref({
   deviceId:"",
-  reportType:"1"
+  reportType:1
 })
 
 async function getInit() {
