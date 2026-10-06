@@ -32,7 +32,13 @@ export default {
   delDevice(x) {
     return instance.delete(`/device/${x.id}`).then(res=>res.data)
   },
+  getReport() {
+    return instance.get(`/report/`).then(res=>res.data)
+  },
   postReport(x) {
     return instance.post(`/report/`,x).then(res=>res.data)
   },
+  delReport(x) {
+    return instance.delete(`/report/${x.id}`).then(res=>res.data)
+  }
 }

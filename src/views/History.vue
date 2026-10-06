@@ -2,8 +2,8 @@
   <div class="">
     <CardBox title="歷史紀錄">
       <template v-slot:content>
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="title" label="報告標題" width="180" />
+        <el-table :data="reportTableData" style="width: 100%">
+          <el-table-column prop="" label="報告標題" width="180" />
           <el-table-column prop="time" label="產生時間" />
           <el-table-column fixed="right" label="Operations" width="200">
             <template #default>
@@ -20,12 +20,14 @@
 <script setup>
 import {ref} from 'vue'
 import CardBox from '../components/CardBox.vue'
+import api from '../assets/js/api.js'
+import config from '../assets/js/config.js'
 
-const tableData=ref([
-  {id:1,title:'裝置1 - 硬體報表',time:'2026-01-01'},
-  {id:2,title:'裝置2 - 硬體報表',time:'2026-01-01'},
-  {id:3,title:'裝置3 - 硬體報表',time:'2026-01-01'},
-  {id:4,title:'裝置4 - 硬體報表',time:'2026-01-01'},
-  {id:5,title:'裝置5 - 硬體報表',time:'2026-01-01'},
-])
+const reportTableData=ref([])
+
+async function getInit() {
+  reportTableData.value=await api.getReport().then(r=>r.data)
+}
+
+getInit()
 </script>

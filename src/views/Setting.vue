@@ -7,7 +7,7 @@
         </el-form-item>
         <el-form-item label="產品">
           <el-select v-model="deviceForm.productId">
-            <el-option v-for="(item) in productTableData" :label="item.name" :value="item.id" :key="item.id" />
+            <el-option v-for="(item) in config.productList" :label="item.name" :value="item.id" :key="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item label="UUID">
@@ -82,7 +82,7 @@
           <el-table-column prop="name" label="裝置名稱" width="180" />
           <el-table-column prop="productId" label="產品">
             <template #default="scope">
-              {{productTableData.find(r=>r.id === scope.row.productId).name}}
+              {{config.productList.find(r=>r.id === scope.row.productId).name}}
             </template>
           </el-table-column>
           <el-table-column prop="uuid" label="UUID" />
@@ -103,6 +103,7 @@
 import {ref} from 'vue'
 import CardBox from '../components/CardBox.vue'
 import api from '../assets/js/api.js'
+import config from '../assets/js/config.js'
 
 const showFormBox=ref(false)
 const isAdd=ref(true)

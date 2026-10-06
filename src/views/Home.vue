@@ -10,25 +10,23 @@
           </el-form-item>
           <el-form-item label="報表類型">
             <el-select v-model="formData.reportType">
-              <el-option label="硬體監控AI分析" :value="1" />
-              <el-option label="用戶流量AI分析" :value="2" />
-              <el-option label="服務流量AI分析" :value="3" />
-              <el-option label="網域流量AI分析" :value="4" />
+              <el-option v-for="(item) in config.reportTypeList" :label="item.name" :value="item.id" :key="item.id" />
             </el-select>
           </el-form-item>
           <el-form-item>
             <div class="w-100 d-flex align-items-center justify-content-end">
-              <el-button type="primary" @click="sub">Create</el-button>
-              <el-button @click="test">資料轉換測試</el-button>
-              <el-button>Cancel</el-button>
+              <el-button type="primary" @click="sub" :disabled="loading">Create</el-button>
+              <el-button @click="test" :disabled="loading">資料轉換測試</el-button>
+              <el-button :disabled="loading">Cancel</el-button>
             </div>
           </el-form-item>
         </el-form>
       </template>
     </CardBox>
     <CardBox title="AI報表">
-      <template v-slot:content v-if="reportData?.choices?.[0]?.message?.content">
-        <VMarkdownView :content="reportData?.choices?.[0]?.message?.content" />
+      <template v-slot:content>
+        <div v-if="loading">報表產生中...</div>
+        <VMarkdownView :content="reportData?.choices?.[0]?.message?.content" v-if="reportData?.choices?.[0]?.message?.content" />
       </template>
     </CardBox>
   </div>
@@ -38,9 +36,11 @@
 import {ref} from 'vue'
 import CardBox from '../components/CardBox.vue'
 import { VMarkdownView } from 'vue3-markdown'
-import api from '../assets/js/api.js'
 import { ElMessage } from 'element-plus'
+import api from '../assets/js/api.js'
+import config from '../assets/js/config.js'
 
+const loading=ref(false)
 const deviceTableData=ref([])
 const formData=ref({
   deviceId:"",
@@ -53,10 +53,16 @@ async function getInit() {
 }
 
 async function sub() {
-  reportData.value=await api.postReport(formData.value)
-  console.log(reportData.value)
-  ElMessage.success('驗證成功')
-  //await api.postReport(formData.value)
+  try {
+    loading.value=true
+    reportData.value=await api.postReport(formData.value)
+    console.log(reportData.value)
+    ElMessage.success('成功')
+    loading.value=false
+  }
+  catch(err) {
+    loading.value=false
+  }
 }
 
 async function test() {
