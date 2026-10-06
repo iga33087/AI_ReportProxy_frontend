@@ -134,15 +134,6 @@ const deviceFormInit=ref({
   }
 })
 
-const productTableData=ref([
-  {id:"P0001",name:"產品一"},
-  {id:"P0002",name:"產品二"},
-  {id:"P0003",name:"產品三"},
-  {id:"P0004",name:"產品四"},
-  {id:"P0005",name:"產品五"},
-  {id:"P0006",name:"產品六"},
-])
-
 const deviceForm=ref(JSON.parse(JSON.stringify(deviceFormInit.value)))
 
 const deviceTableData=ref([])
