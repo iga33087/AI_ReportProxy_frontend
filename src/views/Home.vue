@@ -26,12 +26,18 @@
         </el-form>
       </template>
     </CardBox>
+    <CardBox title="AI報表">
+      <template v-slot:content v-if="reportData?.choices?.[0]?.message?.content">
+        <VMarkdownView :content="reportData?.choices?.[0]?.message?.content" />
+      </template>
+    </CardBox>
   </div>
 </template>
 
 <script setup>
 import {ref} from 'vue'
 import CardBox from '../components/CardBox.vue'
+import { VMarkdownView } from 'vue3-markdown'
 import api from '../assets/js/api.js'
 import { ElMessage } from 'element-plus'
 
@@ -40,13 +46,15 @@ const formData=ref({
   deviceId:"",
   reportType:1
 })
+const reportData = ref({})
 
 async function getInit() {
   deviceTableData.value=await api.getDevice().then(r=>r.data)
 }
 
 async function sub() {
-  await api.postReport(formData.value)
+  reportData.value=await api.postReport(formData.value)
+  console.log(reportData.value)
   ElMessage.success('驗證成功')
   //await api.postReport(formData.value)
 }
