@@ -66,7 +66,7 @@
         </el-card>
         <el-form-item>
           <div class="w-100 d-flex align-items-center justify-content-end">
-            <el-button type="primary" @click="sub">Create</el-button>
+            <el-button type="primary" @click="sub">Submit</el-button>
             <el-button @click="showFormBox=false">Cancel</el-button>
           </div>
         </el-form-item>
